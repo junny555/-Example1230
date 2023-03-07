@@ -1,0 +1,135 @@
+  <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      form {
+        width: 50%;
+      }
+      label {
+        margin-top: 10px;
+        display: block;
+      }
+      input[type="text"],
+      input[type="email"],
+       input[type="userid"],
+      
+      
+	 
+      input[type="passwordck"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      input[type="submit"] {
+        background-color: #808080;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #808080;
+      }
+      p {
+        margin-top: 20px;
+      }
+    </style>
+    <script>
+      function check() {
+        const userid = document.getElementById("userid").value;
+        const email = document.getElementById("email").value;
+        const passwordck = document.getElementById("passwordck").value;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (userid.trim() === "") {
+          alert("다시 체크.");
+          return false;
+        }
+        if (email.trim() === "" || !emailRegex.test(email)) {
+          alert("다시 체크.");
+          return false;
+        }
+        if (passwordck.trim().length < 5) {
+          alert("다시 체크.");
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>회원가입</h1>
+    <form action="/register" method="post">
+      <div>
+        <label for="userid"><strong>아이디:</strong></label>
+        <input type="text" placeholder="id:" id="userid" name="userid">
+        <input type="submit" value="확인" onclick="return check();">
+        
+      </div>
+      <div>
+        <label for="password"><strong>비밀번호:</strong></label>
+        <input type="password" placeholder="pw:" id="password" name="password">
+      </div>
+      <div>
+        <label for="passwordck"><strong>비밀번호 확인:</strong></label>
+        <input type="password" placeholder="pw:" id="passwordck" name="passwordck">
+        <input type="submit" value="확인" onclick="return check();">
+      </div>
+      <div>
+        <label for="username"><strong>이름:</strong></label>
+        <input type="text" placeholder="ex:이세준" id="username" name="username">
+      </div>
+      <div>
+        <label for="phnumber"><strong>전화번호:</strong></label>
+        <input type="number" placeholder="ex. 01012345678" id="phnumber" name="phnumber">
+      </div>
+      <div>
+        <label for="email"><strong>이메일:</strong></label>
+        <input type="text" placeholder="ex. aaaa@naver.com" id="email" name="email">
+      </div>
+      <div>
+        <label for="gender"><strong>성별:</strong></label>
+
+       
+          <input type="radio" name="man" checked="checked" value="남성" /> 남성
+          <input type="radio" name="woman" value="여성" /> 여성
+        
+      </div>
+    
+    
+      <div>
+      
+        <label for="address"><strong>지역:</strong></label>
+        <select name="지역">
+        <option value="">지역선택</option>
+        <option value="전주">전주</option>
+        <option value="서울" >서울</option>
+        <option value="광주">광주</option>
+        </select>
+      </div>
+    
+      <div>
+        <label for="birth"><strong>생년월일:</strong></label>
+        <input type="number" placeholder="ex.19990318" id="username" name="username">
+      </div>
+    
+      <p>회원가입 </p>
+      <div>
+        <input type="submit" value="확인" onclick="return check();">
+      </div>
+    </form>
+  </body>
+</html>
+
