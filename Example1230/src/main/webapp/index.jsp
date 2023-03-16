@@ -10,5 +10,6 @@
 <a href="<%=request.getContextPath()%>/member/memberJoin.do"> 회원가입하기</a>
 <a href="<%=request.getContextPath()%>/board/boardList.do"> 게시판목록 </a>
 <a href="<%=request.getContextPath()%>/board/boardWrite.do"> 게시판글쓰기 </a>
+<a href="<%=request.getContextPath()%>/board/boardModify.do">게시판수정 </a>
 </body>
 </html>

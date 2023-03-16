@@ -50,7 +50,7 @@ text-decoration:none;
 <% for(BoardVo bv : blist){ %>
 <tr>
 	<td><%=bv.getBidx()%></td>
-	<td><%=bv.getSubject() %></td>
+	<td><a href="<%=request.getContextPath()%>/board/boardContents.do?bidx=<%=bv.getBidx() %>"><%=bv.getSubject()%></a></td>
 	<td><%=bv.getWriter() %></td>
 	<td><%=bv.getWriteday() %></td>
 </tr>

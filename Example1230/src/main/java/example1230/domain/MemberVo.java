@@ -87,6 +87,5 @@ public class MemberVo {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	
-	
+
 }

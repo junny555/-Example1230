@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+      <%@ page import = "example1230.domain.BoardVo" %>
+    
+    
+   <%BoardVo bv= (BoardVo)request.getAttribute("bv"); %>
+     
+    
+       
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +32,7 @@ function check(){
 		return;
 	}
 	
-	fm.action = "<%=request.getContextPath()%>/board/boardWriteAction.do";
+	fm.action = "<%=request.getContextPath()%>/board/boardModifyAction.do";
 	fm.method="post";
 	fm.submit();
 	return;
@@ -35,18 +44,19 @@ function check(){
 <body>
 게시판 글수정
 <form name="frm">
+<input type ="hidden" name="bidx" value="<%=bv.getBidx() %>">
 <table  border=1 style="width:500px;">
 <tr>
 <td>제목</td>
-<td><input type="text" name="subject"></td>
+<td><input type="text" name="subject" value ="<%=bv.getSubject()%>">   </td>
 </tr>
 <tr>
 <td>내용</td>
-<td><textarea name="contents" cols="50"  rows="5"></textarea></td>
+<td><textarea name="contents" cols="50"  rows="5">"<%=bv.getContents()%>"</textarea></td>
 </tr>
 <tr>
 <td>작성자</td>
-<td><input type="text" name="writer" maxlength=5></td>
+<td><input type="text" name="writer" maxlength=5 value="<%=bv.getWriter()%>"></td>
 </tr>
 <tr>
 <td>파일첨부</td>
@@ -59,6 +69,7 @@ function check(){
 </td></tr>
 
 </table>
+
 </form>
 </body>
 </html>

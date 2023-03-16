@@ -1,5 +1,13 @@
+<%@page import="example1230.domain.BoardVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import = "example1230.domain.BoardVo" %>
+    
+    
+   <%BoardVo bv= (BoardVo)request.getAttribute("bv"); %>
+     
+    
+    
     
 <!DOCTYPE html>
 <html>
@@ -12,7 +20,7 @@
 <table  border=1 style="width:500px;">
 <tr>
 <td style="width:50px;">제목</td>
-<td>  조회수</td>
+<td> <%=bv.getSubject() %>    &nbsp; &nbsp; 조회수(<%=bv.getViewcnt() %>)</td>
 </tr>
 <tr>
 <td>파일다운로드</td>
@@ -26,15 +34,16 @@
 
 <tr>
 <td style="height:200px;">내용</td>
-<td></td>
+<td><%=bv.getSubject() %></td>
 </tr>
 <tr>
 <td>작성자</td>
-<td></td>
+<td><%=bv.getWriter() %></td>
 </tr>
 <tr>
 <td colspan=2 style="text-align:right;">
-<button>수정</button>
+<a  href = "<%=request.getContextPath()%>/board/boardModify.do?bidx=<%=bv.getBidx()%>">수정</a>
+
 <button>삭제</button>
 <button>답변</button>
 <button>목록</button>

@@ -11,6 +11,15 @@ public class BoardVo {
     private String 	writeday;
     private String 	ip;
     private int 	midx;
+    private String viewcnt;
+    
+	
+	public String getViewcnt() {
+		return viewcnt;
+	}
+	public void setViewcnt(String viewcnt) {
+		this.viewcnt = viewcnt;
+	}
 	public int getBidx() {
 		return bidx;
 	}
