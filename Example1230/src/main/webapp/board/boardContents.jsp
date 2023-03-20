@@ -44,8 +44,10 @@
 <td colspan=2 style="text-align:right;">
 <a  href = "<%=request.getContextPath()%>/board/boardModify.do?bidx=<%=bv.getBidx()%>">수정</a>
 
-<button>삭제</button>
-<button>답변</button>
+<a href = "<%=request.getContextPath()%>/board/boardDelete.do?bidx=<%=bv.getBidx()%>">삭제</a>
+
+
+	<button onclick="location.href='<%=request.getContextPath()%>/board/boardReply.do?bidx=<%=bv.getBidx() %>&originbidx=<%=bv.getOriginbidx()%>&depth=<%=bv.getDepth()%>&level_=<%=bv.getLevel_() %>'" >답변</button>
 <button>목록</button>
 </td>
 </tr>

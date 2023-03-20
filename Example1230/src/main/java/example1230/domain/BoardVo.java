@@ -12,8 +12,36 @@ public class BoardVo {
     private String 	ip;
     private int 	midx;
     private String viewcnt;
-    
+    private String pwd;
+    private int originbidx;
+    private int depth;
+    private int level_;
 	
+	public int getOriginbidx() {
+		return originbidx;
+	}
+	public void setOriginbidx(int originbidx) {
+		this.originbidx = originbidx;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+	
+	public int getLevel_() {
+		return level_;
+	}
+	public void setLevel_(int level_) {
+		this.level_ = level_;
+	}
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 	public String getViewcnt() {
 		return viewcnt;
 	}

@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import example1230.domain.MemberVo;
 import example1230.service.MemberDao;
@@ -77,15 +78,57 @@ public class MemberController extends HttpServlet {
 			 out.println("{\"value\": \""+value+"\"}");
 			 
 			
+		}else if (str.equals("/member/memberLogin.do")) {
+			System.out.println("memberLogin 들어옴");
+			RequestDispatcher rd = request.getRequestDispatcher("/member/memberLogin.jsp");
+			rd.forward(request, response);
+			
+			
 		}
-		
-		
-		
-		
-	}
+			
 	
+	
+			
+		//	response.sendRedirect(request.getContextPath()+"/");
+			
+		else if(str.equals("/member/memberLoginAction.do")) {
+			String memberId=request.getParameter("memberId");
+			String memberPwd = request.getParameter("memberPwd");
+			
+			//처리하는 메소드
+			
+			MemberDao md =new MemberDao();
+	MemberVo mv =md.memberLogin(memberId, memberPwd);
+			
+			if (mv == null) {
+				response.sendRedirect(request.getContextPath()+"/member/memberLogin.do");
+			
+			}else {
+				int midx = mv.getMidx();
+				String membername=mv.getMembername();
+			
+				
+				HttpSession session= request.getSession();
+				session.setAttribute("midx", midx);
+				session.setAttribute("memberName", membername);
+				
+				response.sendRedirect(request.getContextPath()+"/");	
+			
+			}
+		}else if (str.equals("/member/memberLogOut.do")) {
+			HttpSession session = request.getSession();
+			session.removeAttribute("midx");
+			session.removeAttribute("memberName");
+			session.invalidate();
+			
+			response.sendRedirect(request.getContextPath()+"/");
+			
+		}
+
+
+	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
+	
 }

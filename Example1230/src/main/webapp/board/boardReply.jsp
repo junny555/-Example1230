@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="example1230.domain.BoardVo" %>
+    <% BoardVo bv= (BoardVo) request.getAttribute("bv");%>
+    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +27,7 @@ function check(){
 		return;
 	}
 	
-	fm.action = "<%=request.getContextPath()%>/board/boardWriteAction.do";
+	fm.action = "<%=request.getContextPath()%>/board/boardReplyAction.do";
 	fm.method="post";
 	
 	fm.submit();
@@ -36,6 +40,11 @@ function check(){
 <body>
 게시판 글답변
 <form name="frm">
+<input type="hidden" name ="bidx"value="<%=bv.getBidx() %>">
+<input type="hidden" name ="originbidx"value="<%=bv.getOriginbidx()%>">
+<input type="hidden" name ="depth"value="<%=bv.getDepth() %>">
+<input type="hidden" name ="level_"value="<%=bv.getLevel_() %>">
+
 <table  border=1 style="width:500px;">
 <tr>
 <td>제목</td>
@@ -48,6 +57,10 @@ function check(){
 <tr>
 <td>작성자</td>
 <td><input type="text" name="writer" maxlength=5></td>
+</tr>
+<tr>
+<td>비밀번호</td>
+<td><input type="password" name="pwd" ></td>
 </tr>
 <tr>
 <td>파일첨부</td>

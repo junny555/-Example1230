@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+    <%
+if (session.getAttribute("midx") == null){
+	out.println("<script>alert('로그인 하셔야 합니다');history.back(-1);</script>");
+}
+    
+    %>
+    
+    
+    
+    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +34,11 @@ function check(){
 		fm.writer.focus();
 		return;
 	}
-	
+	else if (fm.pwd.value == ""){
+		alert("비밀번호를 입력하세요");
+		fm.writer.focus();
+		return;
+	}
 	fm.action = "<%=request.getContextPath()%>/board/boardWriteAction.do";
 	fm.method="post";
 	//fm.enctype ="multipart/form-data";
@@ -49,6 +64,10 @@ function check(){
 <tr>
 <td>작성자</td>
 <td><input type="text" name="writer" maxlength=5></td>
+</tr>
+<tr>
+<td>비밀번호</td>
+<td><input type="password" name="pwd" maxlength=20></td>
 </tr>
 <tr>
 <td>파일첨부</td>

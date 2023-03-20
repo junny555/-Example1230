@@ -50,9 +50,16 @@ text-decoration:none;
 <% for(BoardVo bv : blist){ %>
 <tr>
 	<td><%=bv.getBidx()%></td>
-	<td><a href="<%=request.getContextPath()%>/board/boardContents.do?bidx=<%=bv.getBidx() %>"><%=bv.getSubject()%></a></td>
+	<td>	<% for (int i=1;i<=bv.getLevel_();i++){
+out.println("&nbsp;&nbsp;");
+if(i == bv.getLevel_()){
+	out.println("ㄴ");
+}
+}
+%><a href="<%=request.getContextPath()%>/board/boardContents.do?bidx=<%=bv.getBidx() %>"><%=bv.getSubject()%></a></td>
 	<td><%=bv.getWriter() %></td>
 	<td><%=bv.getWriteday() %></td>
+	
 </tr>
 <%} %>
 

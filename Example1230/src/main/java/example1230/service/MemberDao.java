@@ -110,7 +110,38 @@ public class MemberDao {
 		return value;
 	}
 	
-	
+	public MemberVo memberLogin(String memberId,String memberPwd) {
+		MemberVo mv=null;
+		String sql="select * from member1230 where delyn='N' and memberid=?and memberPwd=?";
+		PreparedStatement pstmt = null;
+		ResultSet rs =null;
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberPwd);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				mv=new MemberVo();
+				
+				mv.setMidx(rs.getInt("midx"));
+				mv.setMembername(rs.getString("membername"));
+		
+						}
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+		}				
+		return mv;
+	}
 	
 	
 	

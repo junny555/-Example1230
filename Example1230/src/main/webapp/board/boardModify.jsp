@@ -31,6 +31,11 @@ function check(){
 		fm.writer.focus();
 		return;
 	}
+	else if (fm.pwd.value == ""){
+		alert("비밀번호를 입력하세요");
+		fm.pwd.focus();
+		return;
+	}
 	
 	fm.action = "<%=request.getContextPath()%>/board/boardModifyAction.do";
 	fm.method="post";
@@ -57,6 +62,10 @@ function check(){
 <tr>
 <td>작성자</td>
 <td><input type="text" name="writer" maxlength=5 value="<%=bv.getWriter()%>"></td>
+</tr>
+<tr>
+<td>비밀번호</td>
+<td><input type="text" name="pwd" maxlength=5 value="<%=bv.getPwd()%>"></td>
 </tr>
 <tr>
 <td>파일첨부</td>

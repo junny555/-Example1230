@@ -1,6 +1,7 @@
 package example1230.controller;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.IssuerSerialNumRequest;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.JoinRowSet;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
@@ -49,12 +51,21 @@ public class BoardController extends HttpServlet {
 		else if (str.equals("/board/boardWrite.do")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/board/boardWrite.jsp");
 			rd.forward(request, response);
+			
 		}else if (str.equals("/board/boardWriteAction.do")) {
 			String subject = request.getParameter("subject");
 			String contents = request.getParameter("contents");
 			String writer = request.getParameter("writer");
+			String pwd = request.getParameter("pwd");
+			
+		//	System.out.println("pwd값 들어옴");
 			String ip= request.getLocalAddr();
-			int midx= 10;
+			HttpSession session = request.getSession();
+			if (session.getAttribute("midx")!=null) {
+			int  midx = (int)session.getAttribute("midx");
+			}
+			int midx =(int ) session.getAttribute("midx");
+		//	int midx= 10;
 			
 	
 		//	String ip= request.getRemoteAddr();
@@ -67,6 +78,7 @@ public class BoardController extends HttpServlet {
 			bv.setWriter(writer);
 			bv.setIp(ip);
 			bv.setMidx(midx);
+			bv.setPwd(pwd);
  			
 			BoardDao bd = new BoardDao();
 			
@@ -112,12 +124,13 @@ public class BoardController extends HttpServlet {
 			rd.forward(request, response);	
 			}
 			else if (str.equals("/board/boardModifyAction.do")) {
-				System.out.println("boardModifyAction.do 들어옴");
+			
 			String bidx=request.getParameter("bidx");	
 			int bidxint = Integer.parseInt(bidx);
 			String subject=request.getParameter("subject");			
 			String contents=request.getParameter("contents");			
-			String writer=request.getParameter("writer");			
+			String writer=request.getParameter("writer");	
+			String pwd = request.getParameter("pwd");
 			
 			//update 
 			
@@ -126,6 +139,7 @@ public class BoardController extends HttpServlet {
 			bv.setSubject(subject);
 			bv.setContents(contents);
 			bv.setWriter(writer);
+			bv.setPwd(pwd);
 			
 			BoardDao bd= new BoardDao();
 			int value= bd.boardModify(bv);
@@ -136,7 +150,105 @@ public class BoardController extends HttpServlet {
 			}else {
 				response.sendRedirect(request.getContextPath()+"/board/boardModify.do?bidx="+bidx);
 			}
-		}	
+			//Delete
+		
+		}	else if(str.equals("/board/boardDelete.do")) {
+			
+			
+			
+			System.out.println("boardDelete.do 들어옴");
+			String bidx=request.getParameter("bidx");
+			int bidxInt = Integer.parseInt(bidx);
+			
+		//	BoardVo bv=new BoardVo();
+			BoardDao bd = new BoardDao();
+			BoardVo  bv= bd.boardSelectOne(bidxInt);
+			
+			request.setAttribute("bv", bv);
+			
+
+
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/board/boardDelete.jsp");
+			rd.forward(request, response);	
+		}else if(str.equals("/board/boardDeleteAction.do")) {
+			String bidx = request.getParameter("bidx");
+			int bidxInt = Integer.parseInt(bidx);
+			String pwd = request.getParameter("pwd");
+		
+			
+			BoardVo bv = new BoardVo();
+			bv.setBidx(bidxInt);
+			bv.setPwd(pwd);
+			
+			BoardDao bd = new BoardDao();
+			int  value =bd.boardDelete(bv);
+			
+			
+			if(value == 1) {
+				response.sendRedirect(request.getContextPath()+"/board/boardList.do");
+				
+			}else {
+				response.sendRedirect(request.getContextPath()+"/board/boardDelete.do?bidx="+bidx);
+			
+			}
+				
+		}else if (str.equals("/board/boardReply.do")) {
+			String bidx = request.getParameter("bidx");
+			String originbidx = request.getParameter("originbidx");
+			String depth= request.getParameter("depth");
+			String level_= request.getParameter("level_");
+			
+			BoardVo bv =new BoardVo();
+			bv.setBidx(Integer.parseInt(bidx));
+			bv.setOriginbidx(Integer.parseInt(originbidx));
+			bv.setDepth(Integer.parseInt(depth));
+			bv.setLevel_(Integer.parseInt(level_));
+			
+			request.setAttribute("bv", bv);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/board/boardReply.jsp");
+			rd.forward(request, response);	
+			
+		}else if (str.equals("/board/boardReplyAction.do")) {
+			String bidx = request.getParameter("bidx");
+			String originbidx = request.getParameter("originbidx");
+			String depth= request.getParameter("depth");
+			String level_= request.getParameter("level_");
+			String subject = request.getParameter("subject");
+			String contents= request.getParameter("contents");
+			String writer=request.getParameter("writer");
+			String pwd = request.getParameter("pwd");
+			String ip = InetAddress.getLocalHost().getHostAddress();
+			
+			HttpSession session = request.getSession();
+			int midx=0;
+			if(session.getAttribute("midx")!=null) {
+				midx =(int )session.getAttribute("midx");
+			}
+			
+			
+			BoardVo bv = new BoardVo() ;
+			bv.setBidx(Integer.parseInt(bidx));
+			bv.setOriginbidx(Integer.parseInt(originbidx));
+			bv.setDepth(Integer.parseInt(depth));
+			bv.setLevel_(Integer.parseInt(level_));
+			bv.setSubject(subject);
+			bv.setContents(contents);
+			bv.setWriter(writer);
+			bv.setIp(ip);
+			bv.setPwd(pwd);
+			bv.setMidx(midx);
+		
+			
+			BoardDao bd= new BoardDao();
+			int value = bd.boardReply(bv);
+			
+			if(value ==1) {
+				response.sendRedirect(request.getContextPath()+"/board/boardList.do");
+			}
+			
+		}
 			
 	}
 	

@@ -36,7 +36,7 @@ public class FrontController extends HttpServlet {
 		
 		if(gubun.equals("member")) {
 			MemberController mc = new MemberController(str);
-			mc.doGet(request, response);
+		mc.doGet(request, response);
 			
 		}else if (gubun.equals("board")) {
 			BoardController bc = new BoardController(str);
